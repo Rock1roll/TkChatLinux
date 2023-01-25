@@ -1,3 +1,5 @@
+#the very beginning
+
 import socket
 import tkinter as tk
 import tkinter.messagebox as msb
@@ -12,6 +14,8 @@ import io
 import random
 import platform
 
+#some imports
+
 DEFAULT_PORT = 33535
 
 ImageFile.LOAD_TRUNCATED_IMAGES = True
@@ -23,6 +27,9 @@ Please keep the chat civil and polite!
 
 Type /online to get online users!
 """
+
+#some defaults
+
 
 class Client():
     def __init__(self,host,port,name,wid):
@@ -143,14 +150,17 @@ class Client():
             self.s.send(text)
         self.last = time.time()
 
+#we made client as an object
 
 root = tk.Tk()
 root.title("tkChat")
 if platform.system()=="Windows":
     root.geometry("600x350")
 else:
-    root.geometry("600x300")
+    root.geometry("600x380")
 root.resizable(False,False)
+
+#window settings
 
 client=None
 
@@ -174,7 +184,6 @@ def connect():
         connb['state'] = 'disabled'
         userl['text'] = name
     except:
-        client=None
         msb.showwarning("Connect","Can't connect to the chat!\nTry again later.")
 
 def send():
@@ -209,8 +218,8 @@ def leave():
 
 root.wm_protocol("WM_DELETE_WINDOW",leave)
 
-connb = tk.Button(root,text="Connect",command=connect)
-connb.pack()
+#connb = tk.Button(root,text="Connect",command=connect)
+#connb.pack()
 
 chatframe = tk.Frame(root,width=200,height=200,bg="white",highlightthickness=1,highlightbackground="lightgrey")
 chatframe.pack()
@@ -225,27 +234,34 @@ chat.tag_configure("time",foreground="#A9A9A9")
 msgf = tk.Frame(root,bg="white",highlightthickness=0,highlightbackground="lightgrey")
 msgf.pack(fill="x")
 
-userl = tk.Label(msgf,text="-")
+
+
+userl = tk.Label(msgf,text="\0", height=1)
 userl.pack(side="left")
 userl.bind("<Button-1>",lambda ev:[root.clipboard_clear(),root.clipboard_append(userl['text'])])
 
-message = tk.Entry(msgf,width=30)
+message = tk.Entry(msgf,width=40)
 message.pack(side="left")
 message.bind("<Return>",lambda ev:send())
 
 popup = tk.Menu(root, tearoff=0)
 popup.add_command(label="Photo",command=lambda:send_attach("photo"))
 
-snd = tk.Button(msgf,text="Send",font="sans-serif 20 bold",height=1,command=send,fg="grey")
+snd = tk.Button(msgf,text="Send",font="sans-serif 15 bold",height=1,command=send)
 snd.pack(side="left")
-
-sm = tk.Button(msgf,text=u"\u270B",font="sans-serif 30 bold",height=1,width=2,command=lambda:message.insert("end",u"\u270B"))
-sm.pack(side="left")
 
 def menu():
     popup.post(add.winfo_rootx(), add.winfo_rooty())
 
-add = tk.Button(msgf,text="+",font="sans-serif 30 bold",height=1,width=2,command=menu)
+add = tk.Button(msgf,text="Attach",font="sans-serif 15 bold",height=1,width=5,command=menu)
 add.pack(side="left")
 
+
+connect_button = tk.Button(msgf,text="Connect",font="sans-serif 15 bold",height=1,command=connect)
+connect_button.pack(side="left")
+
+#setting ui and buttons
+
 root.mainloop()
+
+#and we run everything
